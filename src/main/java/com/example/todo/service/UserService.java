@@ -15,13 +15,14 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository memberRepository;
+    private final UserRepository UserRepository;
+    private final UserRepository userRepository;
 
     public SignUpResponseDto signUp(String username, String password, String email) {
 
         User member = new User(username, password, email);
 
-        User savedMember = memberRepository.save(member);
+        User savedMember = UserRepository.save(member);
 
 
         return new SignUpResponseDto(savedMember.getUsername(), savedMember.getEmail());
@@ -29,19 +30,37 @@ public class UserService {
 
     public UserResponseDto findById(Long id) {
         
-        memberRepository.findById(id);
+        UserRepository.findById(id);
         
-        if (memberRepository.existsById(id)) {
+        if (UserRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id : " + id);
         }
 
-       return new UserResponseDto(memberRepository.findByIdOrElseThrow(id).getUsername(), memberRepository.findByIdOrElseThrow(id).getEmail());
+       return new UserResponseDto(UserRepository.findByIdOrElseThrow(id).getUsername(), UserRepository.findByIdOrElseThrow(id).getEmail());
+    }
+
+    public void updateUser(Long Id, String username) {
+
+        // String username -> 4단계 구현시 매개변수로 넣기!!
+
+        User user = userRepository.findByIdOrElseThrow(Id);  // 해당 ID의 일정 찾기
+
+        if (username == null) {
+            username= user.getUsername();
+        }
+
+//        if (username== null) {
+//            username = user.getUser().getUsername();
+//        }
+
+        user.updatedUsername(username);  // 일정의 제목과 내용을 업데이트
+        userRepository.save(user);  // 변경된 내용 저장
     }
 
     @Transactional //묶어주는 기능(하나의 트렌젝션 내에서 동작하게 만들어준다)
     public void updatePassword(Long id, String oldPassword, String newPassword) {
 
-        User findMember = memberRepository.findByIdOrElseThrow(id);
+        User findMember = UserRepository.findByIdOrElseThrow(id);
 
         if (!findMember.getPassword().equals(oldPassword)) {
             throw new ResponseStatusException(HttpStatus .UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");

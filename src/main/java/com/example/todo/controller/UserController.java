@@ -1,8 +1,6 @@
 package com.example.todo.controller;
 
-import com.example.todo.Dto.UserResponseDto;
-import com.example.todo.Dto.SignUpRequestDto;
-import com.example.todo.Dto.SignUpResponseDto;
+import com.example.todo.Dto.*;
 import com.example.todo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +29,19 @@ public class UserController {
 
     @GetMapping("/{id}") // 유저 선택 조회
     public ResponseEntity<UserResponseDto> findById(@PathVariable Long id) {
-        UserResponseDto membersResponseDto = userService.findById(id);
+        UserResponseDto usersResponseDto = userService.findById(id);
 
-        return new ResponseEntity<>(membersResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(usersResponseDto, HttpStatus.OK);
+    }
+
+    // 일정 업데이트 (예: 제목이나 내용 수정)
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUsersRequestDto UserRequestDto
+    ) {
+        userService.updateUser(id, UserRequestDto.getUsername());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

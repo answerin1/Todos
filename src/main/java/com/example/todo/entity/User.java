@@ -43,5 +43,8 @@ public class User {
         this.password = password;
     }
 
+    public void updatedUsername(String username) {
+        this.username = username;
+    }
 }
 
