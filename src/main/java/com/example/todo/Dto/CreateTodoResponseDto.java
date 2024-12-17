@@ -10,13 +10,11 @@ public class CreateTodoResponseDto {
 
         final private String contents;
 
-        final private String username;
 
         // 생성자
-        public CreateTodoResponseDto(String title, String contents, String username) {
+        public CreateTodoResponseDto(String title, String contents) {
             this.title = title;
             this.contents = contents;
-            this.username = username;
         }
     }
 

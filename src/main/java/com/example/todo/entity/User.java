@@ -2,7 +2,13 @@ package com.example.todo.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
+
+
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
 @Table(name = "User")
@@ -19,6 +25,11 @@ public class User {
 
     @Column(nullable = false)
     private String email; // 강의상 age
+
+    @CreatedDate
+    @Column(updatable = false) // 생성시간이 수정되지 못하게 설정ㅂ!
+    @Temporal(TemporalType.TIMESTAMP) // 생략가능.. 날짜 타입을 세부적으로 지정하는 기능
+    private LocalDateTime createdAt;
 
     public User() {}
 

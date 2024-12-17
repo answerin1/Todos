@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) // Jpa auditing 쓴거다
 
 public abstract class BaseEntity {
     @CreatedDate

@@ -26,25 +26,25 @@ public class TodoService {
         // 너 누구야 강사님,,? 강사 너어어어어어억 ㅠㅠㅠㅠㅠㅠ 나 울어 ㅠㅠㅠㅠㅠㅠㅠ -> 트슈다 트슈~!!!!! 두개나 건짐 ㄷㄷ
         // 착실하게 강의를 들은 증거 = 잘못... 너무 착실했다^^ 착실 그ㅡ 잡채요
         //ㅋㅋ 만 금조ㅋ덜 성자실하 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-        Todo todo = new Todo(title, contents, username);  // 새로운 Todos 생성
+        Todo todo = new Todo(title, contents);  // 새로운 Todos 생성
 //        todo.setUsername(username);  // 해당 사용자와 연결
 
         Todo savedTodo = todoRepository.save(todo);  // 저장
 
-        return new CreateTodoResponseDto(savedTodo.getTitle(), savedTodo.getContents(),savedTodo.getUsername());
+        return new CreateTodoResponseDto(savedTodo.getTitle(), savedTodo.getContents());
     }
 
     // ID를 통한 조회
     public TodoResponseDto findById(Long id) {
         Todo todo = todoRepository.findByIdOrElseThrow(id);  // ID로 일정 조회
-        return new TodoResponseDto(todo.getUsername(), todo.getTitle(), todo.getContents());
+        return new TodoResponseDto(todo.getTitle(), todo.getContents());
     }
 
     // 모든 일정 조회
     public List<TodoResponseDto> findAll() {
         return todoRepository.findAll()
                 .stream()
-                .map(todo -> new TodoResponseDto(todo.getUsername(), todo.getTitle(), todo.getContents()))
+                .map(todo -> new TodoResponseDto(todo.getTitle(), todo.getContents()))
                 .collect(Collectors.toList());
     }
 

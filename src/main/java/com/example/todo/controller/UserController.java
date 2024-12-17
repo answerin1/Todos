@@ -3,7 +3,6 @@ package com.example.todo.controller;
 import com.example.todo.Dto.UserResponseDto;
 import com.example.todo.Dto.SignUpRequestDto;
 import com.example.todo.Dto.SignUpResponseDto;
-import com.example.todo.Dto.UpdatePasswordRequestDto;
 import com.example.todo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,17 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService memberService;
+    private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("/signup") // 유저 생성
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
 
         SignUpResponseDto signUpResponseDto =
-                memberService.signUp(
+                userService.signUp(
                         requestDto.getUsername(),
                         requestDto.getPassword(),
                         requestDto.getEmail()
@@ -30,22 +29,10 @@ public class UserController {
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // 유저 선택 조회
     public ResponseEntity<UserResponseDto> findById(@PathVariable Long id) {
-        UserResponseDto membersResponseDto = memberService.findById(id);
+        UserResponseDto membersResponseDto = userService.findById(id);
 
         return new ResponseEntity<>(membersResponseDto, HttpStatus.OK);
     }
-
-    @PatchMapping("/{id}")// 일부 수정
-    public ResponseEntity<Void> updatePassword(
-            @PathVariable Long id,
-            @RequestBody UpdatePasswordRequestDto requestDto
-    ) {
-
-        memberService.updatePassword(id, requestDto.getOldPassword(), requestDto.getNewPassword());
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
 }

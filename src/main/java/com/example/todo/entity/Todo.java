@@ -14,11 +14,14 @@ public class Todo extends BaseEntity { // Base Entity 상속.. 셍성 및 수정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
-    private String username;
 
     private String title;
     private String contents;
+
+
+    @ManyToOne // N(일정):1(유저)
+    @JoinColumn(name = "user_id" , referencedColumnName = "id") //유저 테이블의 id를 참조하는 키가 유저아이디라고 todoTable에 생성됨
+    private User user;
 
     // 기본 생성자
     public Todo() {
@@ -26,10 +29,9 @@ public class Todo extends BaseEntity { // Base Entity 상속.. 셍성 및 수정
     }
 
     // 생성자
-    public Todo(String title, String contents, String username) {
+    public Todo(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.username = username;
     }
 
 //    private String createdAt; 이미 상속 받은 것이기에 중복해서 쓸 필요 없다!
