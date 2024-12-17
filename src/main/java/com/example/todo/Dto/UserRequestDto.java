@@ -1,4 +1,4 @@
 package com.example.todo.Dto;
 
-public class MemberRequestDto {
+public class UserRequestDto {
 }

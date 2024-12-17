@@ -8,12 +8,12 @@ public class SignUpRequestDto {
     public String username;
     public String password;
 
-    public int age; //과제 시 수정
+    public String email; //과제 시 수정
 
-    public SignUpRequestDto(String username, String password, int age) {
+    public SignUpRequestDto(String username, String password, String email) {
         this.username = username;
         this.password = password;
-        this.age = age;
+        this.email = email;
     }
 
 

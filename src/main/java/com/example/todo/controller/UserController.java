@@ -1,10 +1,10 @@
 package com.example.todo.controller;
 
-import com.example.todo.Dto.MemberResponseDto;
+import com.example.todo.Dto.UserResponseDto;
 import com.example.todo.Dto.SignUpRequestDto;
 import com.example.todo.Dto.SignUpResponseDto;
 import com.example.todo.Dto.UpdatePasswordRequestDto;
-import com.example.todo.service.MemberService;
+import com.example.todo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
-public class MemberController {
+public class UserController {
 
-    private final MemberService memberService;
+    private final UserService memberService;
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
@@ -24,15 +24,15 @@ public class MemberController {
                 memberService.signUp(
                         requestDto.getUsername(),
                         requestDto.getPassword(),
-                        requestDto.getAge()
+                        requestDto.getEmail()
                 );
 
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id) {
-        MemberResponseDto membersResponseDto = memberService.findById(id);
+    public ResponseEntity<UserResponseDto> findById(@PathVariable Long id) {
+        UserResponseDto membersResponseDto = memberService.findById(id);
 
         return new ResponseEntity<>(membersResponseDto, HttpStatus.OK);
     }

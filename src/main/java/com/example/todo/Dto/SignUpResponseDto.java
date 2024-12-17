@@ -8,14 +8,11 @@ public class SignUpResponseDto {
 
     private String username;
     private String email;
-    private String age;
 
-    public SignUpResponseDto(String username, String email, String age) {
+    public SignUpResponseDto(String username, String email) {
         this.username = username;
         this.email = email;
-        this.age = age;
     }
 
-    public SignUpResponseDto(Long id, String username, int age) {
-    }
+
 }

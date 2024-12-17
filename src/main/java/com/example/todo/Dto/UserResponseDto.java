@@ -4,18 +4,18 @@ import lombok.Getter;
 
 @Getter
 
-public class MemberResponseDto {
+public class UserResponseDto {
 
 
     // 속성
     private final String username;
 
-    private final Integer age;
+    private final String email;
 
     // 생성자
-    public MemberResponseDto(String username, Integer age) {
+    public UserResponseDto(String username, String email) {
         this.username = username;
-        this.age = age;
+        this.email = email;
     }
 
 }
