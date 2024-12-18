@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/users")
@@ -81,6 +82,5 @@ public class UserController {
         response.addCookie(cookie); //응답 시 클라이언트가 관리하라고 쿠키를 던져 뇸뇸굿
         // 쿠키 몬스터 노동
     }
-
 }
 
