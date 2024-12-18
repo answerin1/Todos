@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.Dto.LoginRequestDto;
 import com.example.todo.Dto.UserResponseDto;
 import com.example.todo.Dto.SignUpResponseDto;
 import com.example.todo.entity.User;
@@ -68,5 +69,12 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
         userRepository.delete(user);  // 유저 삭제
+    }
+
+    // 로그인 작동 -> 입력받은 이메일과 비밀번호로 유저 식별자를 받아온다
+    public Long login(LoginRequestDto loginRequestDto) {
+        User user = userRepository.findIdByUserEmailAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+
+        return user.getId();
     }
 }
