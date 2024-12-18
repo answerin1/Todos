@@ -7,7 +7,6 @@
 3. API 명세서
 
 
----
 # [목적]
 
 1. JPA를 활용한 데이터베이스 관리와 cookie/session을 활용한 인증/인가를 할 수 있다.
@@ -34,7 +33,6 @@
 
 일정 전채 삭제 (D)
 
---
 
 ### <유저 관련>
 
@@ -48,7 +46,6 @@
 
 유저 삭제 (D)
 
----
 
 ## [기능 맛보기]
 
@@ -60,14 +57,12 @@
 
   <img width="989" alt="image" src="https://github.com/user-attachments/assets/9cb18113-949b-4347-8ec3-2ee064227840" />
 
----
 
 ## [ERD 다이어그램]
 
 ![img.png](img.png)
 
 
----
 
 # [Lv.4 API 명세서]
 
