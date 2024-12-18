@@ -32,19 +32,20 @@ public class TodosController {  // 클래스 이름을 TodoController에서 Todo
     // 일정 생성
     @PostMapping
     public ResponseEntity<CreateTodoResponseDto> createTodo(@RequestBody CreateTodoRequestDto requestDto, HttpServletRequest httpServletRequest) {
-        CreateTodoResponseDto createTodoResponseDto =
-                todoService.createTodo(
-                        requestDto.getTitle(),
-                        requestDto.getContents(),
-                        requestDto.getUsername()
-                );
-
         // 세션 get. 새로 생성하지는 X (로그인 하면서 세션이 만들어 졌으니까 false)
         HttpSession httpSession = httpServletRequest.getSession(false);
         // 세션에서 로그인 한 유저의 id(식별자) get
         // 누가 로그인 했는지 (로그인한 유저의 고유 식별자 get)
         Long userId = (Long) httpSession.getAttribute("userId");
+        String name = requestDto.getUsername();
 
+        CreateTodoResponseDto createTodoResponseDto =
+                todoService.createTodo(
+                        requestDto.getTitle(),
+                        requestDto.getContents(),
+                        requestDto.getUsername(),
+                        userId
+                );
         return new ResponseEntity<>(createTodoResponseDto, HttpStatus.CREATED);
     }
 
