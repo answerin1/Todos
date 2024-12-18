@@ -73,7 +73,7 @@ public class UserService {
 
     // 로그인 작동 -> 입력받은 이메일과 비밀번호로 유저 식별자를 받아온다
     public Long login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findIdByUserEmailAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        User user = userRepository.findIdByEmailAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
         return user.getId();
     }

@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByUsername(String username); //ts
 
-    User findIdByUserEmailAndPassword(String email, String password);
+    User findIdByEmailAndPassword(String email, String password);
     // SELETE * FROM User u WHERE u.email = email AND u.password = password;
 
     default User findUserByUsernameOrElseThrow(String username) {
