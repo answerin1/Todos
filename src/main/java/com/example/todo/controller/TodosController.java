@@ -6,6 +6,8 @@ import com.example.todo.Dto.TodoResponseDto;
 import com.example.todo.Dto.UpdateTodoRequestDto;
 import com.example.todo.repository.TodoRepository;
 import com.example.todo.service.TodoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,13 +31,19 @@ public class TodosController {  // 클래스 이름을 TodoController에서 Todo
 
     // 일정 생성
     @PostMapping
-    public ResponseEntity<CreateTodoResponseDto> createTodo(@RequestBody CreateTodoRequestDto requestDto) {
+    public ResponseEntity<CreateTodoResponseDto> createTodo(@RequestBody CreateTodoRequestDto requestDto, HttpServletRequest httpServletRequest) {
         CreateTodoResponseDto createTodoResponseDto =
                 todoService.createTodo(
                         requestDto.getTitle(),
                         requestDto.getContents(),
                         requestDto.getUsername()
                 );
+
+        // 세션 get. 새로 생성하지는 X (로그인 하면서 세션이 만들어 졌으니까 false)
+        HttpSession httpSession = httpServletRequest.getSession(false);
+        // 세션에서 로그인 한 유저의 id(식별자) get
+        // 누가 로그인 했는지 (로그인한 유저의 고유 식별자 get)
+        Long userId = (Long) httpSession.getAttribute("userId");
 
         return new ResponseEntity<>(createTodoResponseDto, HttpStatus.CREATED);
     }
