@@ -21,13 +21,11 @@ public class TodoService {
     private final UserRepository userRepository;
 
     // 일정 생성
-    public CreateTodoResponseDto createTodo(String title, String contents, String username) {
+    public CreateTodoResponseDto createTodo(String title, String contents, String username, Long userId) {
         // var user = userRepository.findMemberByUsernameOrElseThrow(username); // username으로 사용자 찾기 create에서는 필요 없다!!
-        // 너 누구야 강사님,,? 강사 너어어어어어억 ㅠㅠㅠㅠㅠㅠ 나 울어 ㅠㅠㅠㅠㅠㅠㅠ -> 트슈다 트슈~!!!!! 두개나 건짐 ㄷㄷ
-        // 착실하게 강의를 들은 증거 = 잘못... 너무 착실했다^^ 착실 그ㅡ 잡채요
-        //ㅋㅋ 만 금조ㅋ덜 성자실하 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+
         Todo todo = new Todo(title, contents);  // 새로운 Todos 생성
-//        todo.setUsername(username);  // 해당 사용자와 연결
+        // todo.setUsername(username);  // 해당 사용자와 연결
 
         Todo savedTodo = todoRepository.save(todo);  // 저장
 
