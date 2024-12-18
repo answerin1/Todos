@@ -23,7 +23,7 @@ public class TodosController {  // 클래스 이름을 TodoController에서 Todo
     private final TodoService todoService;
     private final TodoRepository repository;
 
-//    @Autowired
+//    @Autowired -> @RequiredArgsConstructor와 다름
 //    public TodosController(TodoService todoService ) {
 //        this.todoService = todoService ;
 //    }

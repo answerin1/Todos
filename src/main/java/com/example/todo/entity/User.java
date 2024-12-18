@@ -24,7 +24,7 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private String email; // 강의상 age
+    private String email;
 
     @CreatedDate
     @Column(updatable = false) // 생성시간이 수정되지 못하게 설정!

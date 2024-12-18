@@ -6,7 +6,6 @@ import lombok.Getter;
 
 public class UserResponseDto {
 
-
     // 속성
     private final String username;
 

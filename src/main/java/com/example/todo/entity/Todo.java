@@ -34,7 +34,7 @@ public class Todo extends BaseEntity { // Base Entity 상속.. 셍성 및 수정
         this.contents = contents;
     }
 
-//    private String createdAt; 이미 상속 받은 것이기에 중복해서 쓸 필요 없다!
+//    private String createdAt; 이미 상속 받은 것이기에 중복해서 쓸 필요 없다
 //    private String updatedAt;
 
     public void update(String title, String contents) {
