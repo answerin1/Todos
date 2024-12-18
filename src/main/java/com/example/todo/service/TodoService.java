@@ -31,20 +31,20 @@ public class TodoService {
 
         Todo savedTodo = todoRepository.save(todo);  // 저장
 
-        return new CreateTodoResponseDto(savedTodo.getTitle(), savedTodo.getContents());
+        return new CreateTodoResponseDto(savedTodo.getId(), savedTodo.getTitle(), savedTodo.getContents());
     }
 
     // ID를 통한 조회
     public TodoResponseDto findById(Long id) {
         Todo todo = todoRepository.findByIdOrElseThrow(id);  // ID로 일정 조회
-        return new TodoResponseDto(todo.getTitle(), todo.getContents());
+        return new TodoResponseDto(todo.getId(), todo.getTitle(), todo.getContents());
     }
 
     // 모든 일정 조회
     public List<TodoResponseDto> findAll() {
         return todoRepository.findAll()
                 .stream()
-                .map(todo -> new TodoResponseDto(todo.getTitle(), todo.getContents()))
+                .map(todo -> new TodoResponseDto(todo.getId(), todo.getTitle(), todo.getContents()))
                 .collect(Collectors.toList());
     }
 

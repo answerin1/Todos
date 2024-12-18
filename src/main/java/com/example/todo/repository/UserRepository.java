@@ -9,12 +9,12 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findMemberByUsername(String username); //ts
+    Optional<User> findUserByUsername(String username); //ts
 
 
-    default User findMemberByUsernameOrElseThrow(String username) {
-        return findMemberByUsername(username)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+    default User findUserByUsernameOrElseThrow(String username) {
+        return findUserByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Does not exist username = " + username));
     }
 

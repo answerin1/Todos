@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-///뭐지... 요상하다
+
 @RestController
 @RequestMapping("/todos")  // 경로를 /Todos로 변경
 @RequiredArgsConstructor // 반드시 값이 필요한 생성자를 자동으로 만들어주는(주입) 기능 (final, @NonNull )
@@ -68,7 +68,7 @@ public class TodosController {  // 클래스 이름을 TodoController에서 Todo
     }
 
     // 일정 삭제
-    @DeleteMapping("/{id}") //어떤 아이디를 삭제할거냐?.. // {} 안에 있는 게 @PathVariable 로 들어온다
+    @DeleteMapping("/{id}") //몇번째 아이디를 삭제할거냐?.. // {} 안에 있는 게 @PathVariable 로 들어온다
     public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         //todoRepository.delete(todoRepository.findByIdOrElseThrow(id));
         todoService.deleteTodo(id); //service => repository.delete(  repository.findById(id) ) :service 거칠 필요 없다

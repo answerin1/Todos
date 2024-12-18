@@ -34,7 +34,7 @@ public class UserController {
         return new ResponseEntity<>(usersResponseDto, HttpStatus.OK);
     }
 
-    // 일정 업데이트 (예: 제목이나 내용 수정)
+    // 유저 업데이트 (예: 유저명)
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateUser(
             @PathVariable Long id,
@@ -42,6 +42,13 @@ public class UserController {
     ) {
         userService.updateUser(id, UserRequestDto.getUsername());
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 유저 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

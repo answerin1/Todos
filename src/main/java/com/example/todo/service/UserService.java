@@ -15,57 +15,58 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository UserRepository;
-    private final UserRepository userRepository;
+    private final UserRepository userRepository; // 필드 중복 제거
 
+    // 회원 가입 메서드
     public SignUpResponseDto signUp(String username, String password, String email) {
-
         User member = new User(username, password, email);
-
-        User savedMember = UserRepository.save(member);
-
-
+        User savedMember = userRepository.save(member);
         return new SignUpResponseDto(savedMember.getUsername(), savedMember.getEmail());
     }
 
+    // 사용자 ID로 조회
     public UserResponseDto findById(Long id) {
-        
-        UserRepository.findById(id);
-        
-        if (UserRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id : " + id);
-        }
+        // Optional로 유저를 찾고 없으면 예외 발생
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
-       return new UserResponseDto(UserRepository.findByIdOrElseThrow(id).getUsername(), UserRepository.findByIdOrElseThrow(id).getEmail());
+        // 유저 정보 반환
+        return new UserResponseDto(user.getUsername(), user.getEmail());
     }
 
-    public void updateUser(Long Id, String username) {
-
-        // String username -> 4단계 구현시 매개변수로 넣기!!
-
-        User user = userRepository.findByIdOrElseThrow(Id);  // 해당 ID의 일정 찾기
+    // 사용자 정보 업데이트
+    public void updateUser(Long id, String username) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
         if (username == null) {
-            username= user.getUsername();
+            username = user.getUsername(); // 입력된 사용자 이름이 없으면 기존 값 사용
         }
 
-//        if (username== null) {
-//            username = user.getUser().getUsername();
-//        }
-
-        user.updatedUsername(username);  // 일정의 제목과 내용을 업데이트
-        userRepository.save(user);  // 변경된 내용 저장
+        user.updatedUsername(username);  // 사용자의 이름 업데이트
+        userRepository.save(user);  // 변경 사항 저장
     }
 
-    @Transactional //묶어주는 기능(하나의 트렌젝션 내에서 동작하게 만들어준다)
+    // 비밀번호 업데이트 (트랜잭션 적용)... 묶어주기
+    @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
 
-        User findMember = UserRepository.findByIdOrElseThrow(id);
-
-        if (!findMember.getPassword().equals(oldPassword)) {
-            throw new ResponseStatusException(HttpStatus .UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+        // 기존 비밀번호 확인
+        if (!user.getPassword().equals(oldPassword)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect old password.");
         }
 
-        findMember.updatedPassword(newPassword);
+        // 비밀번호 업데이트
+        user.updatedPassword(newPassword);
+    }
+
+    // 사용자 삭제 메서드
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
+
+        userRepository.delete(user);  // 유저 삭제
     }
 }
