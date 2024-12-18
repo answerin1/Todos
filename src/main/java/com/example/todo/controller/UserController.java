@@ -66,7 +66,6 @@ public class UserController {
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일과 비밀번호가 일치하지 않습니다.");
         }
-
         // 로그인 성공 처리
         // 기본은 true
         HttpSession session = request.getSession();
