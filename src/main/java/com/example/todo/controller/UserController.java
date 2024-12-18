@@ -78,8 +78,8 @@ public class UserController {
 
         // 쿠키에 값 세팅 (expire 시간을 주지 않으면 세션쿠키가 됨, 브라우저 종료시 로그아웃)
         // Response Set-Cookie: userId=1 형태로 전달된다.
-        response.addCookie(cookie); //응답 시 클라이언트가 관리하라고 쿠키를 던져 뇸뇸굿
-        // 쿠키 몬스터 노동
+        response.addCookie(cookie); //응답 시 클라이언트가 관리하라고 쿠키를 던져
+
     }
 }
 
