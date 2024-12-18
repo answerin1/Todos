@@ -1,15 +1,14 @@
 package com.example.todo.controller;
 
-import com.example.todo.Dto.CreateTodoRequestDto;
-import com.example.todo.Dto.CreateTodoResponseDto;
-import com.example.todo.Dto.TodoResponseDto;
-import com.example.todo.Dto.UpdateTodoRequestDto;
+import com.example.todo.dto.CreateTodoRequestDto;
+import com.example.todo.dto.CreateTodoResponseDto;
+import com.example.todo.dto.TodoResponseDto;
+import com.example.todo.dto.UpdateTodoRequestDto;
 import com.example.todo.repository.TodoRepository;
 import com.example.todo.service.TodoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

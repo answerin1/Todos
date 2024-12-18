@@ -1,8 +1,8 @@
 package com.example.todo.service;
 
-import com.example.todo.Dto.LoginRequestDto;
-import com.example.todo.Dto.UserResponseDto;
-import com.example.todo.Dto.SignUpResponseDto;
+import com.example.todo.dto.LoginRequestDto;
+import com.example.todo.dto.UserResponseDto;
+import com.example.todo.dto.SignUpResponseDto;
 import com.example.todo.entity.User;
 import com.example.todo.repository.UserRepository;
 import jakarta.transaction.Transactional;

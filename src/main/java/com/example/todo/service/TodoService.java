@@ -1,11 +1,10 @@
 package com.example.todo.service;
 
-import com.example.todo.Dto.CreateTodoResponseDto;
-import com.example.todo.Dto.TodoResponseDto;
+import com.example.todo.dto.CreateTodoResponseDto;
+import com.example.todo.dto.TodoResponseDto;
 import com.example.todo.entity.Todo;
 import com.example.todo.repository.TodoRepository;
 import com.example.todo.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
