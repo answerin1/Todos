@@ -70,7 +70,7 @@ public class UserController {
         // 기본은 true
         HttpSession session = request.getSession();
         // 세션에 유저id 저장
-        session.setAttribute("UserId", userId);
+        session.setAttribute("userId", userId);
 
         // 쿠키에 세션 추가
         // 쿠키 생성
