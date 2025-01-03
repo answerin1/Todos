@@ -21,7 +21,6 @@ public abstract class BaseEntity {
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP) // 생략가능
     private LocalDateTime upDatedAt;
-
-
 }
+
 
