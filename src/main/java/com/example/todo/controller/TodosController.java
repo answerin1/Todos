@@ -8,6 +8,7 @@ import com.example.todo.repository.TodoRepository;
 import com.example.todo.service.TodoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class TodosController {  // 클래스 이름을 TodoController에서 Todo
 
     // 일정 생성
     @PostMapping
-    public ResponseEntity<CreateTodoResponseDto> createTodo(@RequestBody CreateTodoRequestDto requestDto, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<CreateTodoResponseDto> createTodo(@Valid @RequestBody CreateTodoRequestDto requestDto, HttpServletRequest httpServletRequest) {
         // 세션 get. 새로 생성하지는 X (로그인 하면서 세션이 만들어 졌으니까 false)
         HttpSession httpSession = httpServletRequest.getSession(false);
         // 세션에서 로그인 한 유저의 id(식별자) get
@@ -47,6 +48,7 @@ public class TodosController {  // 클래스 이름을 TodoController에서 Todo
                 );
         return new ResponseEntity<>(createTodoResponseDto, HttpStatus.CREATED);
     }
+
 
     // 일정 조회
     @GetMapping("/{id}")

@@ -1,6 +1,7 @@
 package com.example.todo.repository;
 
 import com.example.todo.entity.User;
+import com.example.todo.exception.NotExistIdException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,16 +17,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     default User findUserByUsernameOrElseThrow(String username) {
         return findUserByUsername(username)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Does not exist username = " + username));
+                .orElseThrow(() -> new NotExistIdException(
+                        "아이디가 존재하지 않습니다."));
     }
 
 
     default User findByIdOrElseThrow(Long id) {
         return findById(id)
                 .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Does not exist id = " + id));
+                        new NotExistIdException(
+                                "아이디가 존재하지 않습니다."));
 
     }
 }

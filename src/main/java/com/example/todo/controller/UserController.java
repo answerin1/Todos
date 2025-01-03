@@ -6,6 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup") // 유저 생성
-    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
+    public ResponseEntity<SignUpResponseDto> signUp(@Valid @RequestBody SignUpRequestDto requestDto) {
 
         SignUpResponseDto signUpResponseDto =
                 userService.signUp(
@@ -43,6 +44,7 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateUser(
             @PathVariable Long id,
+
             @RequestBody UpdateUsersRequestDto UserRequestDto
     ) {
         userService.updateUser(id, UserRequestDto.getUsername());
@@ -58,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Void> login(@Valid @RequestBody LoginRequestDto loginRequestDto, HttpServletRequest request, HttpServletResponse response) {
         // 유저 서비스(userService)를 참조해서 로그인 기능을 사용. 반환하는 Id를 userId에 저장
         Long userId =  userService.login(loginRequestDto); // 매개변수에는 타입 말고 이름을 적어 주
 

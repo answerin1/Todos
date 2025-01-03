@@ -4,6 +4,8 @@ import com.example.todo.dto.LoginRequestDto;
 import com.example.todo.dto.UserResponseDto;
 import com.example.todo.dto.SignUpResponseDto;
 import com.example.todo.entity.User;
+import com.example.todo.exception.IncorrectPasswordException;
+import com.example.todo.exception.NotFoundUserException;
 import com.example.todo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,7 @@ public class UserService {
     public UserResponseDto findById(Long id) {
         // Optional로 유저를 찾고 없으면 예외 발생
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
+                .orElseThrow(() -> new NotFoundUserException("사용자를 찾을 수 없습니다."));
 
         // 유저 정보 반환
         return new UserResponseDto(user.getUsername(), user.getEmail());
@@ -38,10 +40,10 @@ public class UserService {
     // 사용자 정보 업데이트
     public void updateUser(Long id, String username) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
+                .orElseThrow(() -> new NotFoundUserException("사용자를 찾을 수 없습니다."));
 
-        if (username == null) {
-            username = user.getUsername(); // 입력된 사용자 이름이 없으면 기존 값 사용
+        if (username != null) {
+            user.setUsername(username);
         }
 
         user.updatedUsername(username);  // 사용자의 이름 업데이트
@@ -52,11 +54,11 @@ public class UserService {
     @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
+                .orElseThrow(() -> new NotFoundUserException("사용자를 찾을 수 없습니다."));
 
         // 기존 비밀번호 확인
         if (!user.getPassword().equals(oldPassword)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect old password.");
+            throw new IncorrectPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
         // 비밀번호 업데이트
@@ -66,7 +68,7 @@ public class UserService {
     // 사용자 삭제 메서드
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
+                .orElseThrow(() -> new NotFoundUserException("사용자를 찾을 수 없습니다."));
 
         userRepository.delete(user);  // 유저 삭제
     }

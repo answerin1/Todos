@@ -1,15 +1,15 @@
 package com.example.todo.repository;
 
 import com.example.todo.entity.Todo;
+import com.example.todo.exception.NotFoundTodoException;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
 
     default Todo findByIdOrElseThrow(Long id) {
-        return findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
+        return findById(id).orElseThrow(() -> new NotFoundTodoException("일정을 찾을 수 없습니다."));
     }
 }
 

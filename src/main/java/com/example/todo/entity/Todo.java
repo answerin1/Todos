@@ -2,51 +2,47 @@ package com.example.todo.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Table(name="TodoDevelop")
 @Entity
-public class Todo extends BaseEntity { // Base Entity 상속.. 셍성 및 수정 시간을 자동으로 생성 가능
+@Getter
+public class Todo {
 
-    // 속성
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String title;
     private String contents;
 
-
-    @ManyToOne // N(일정):1(유저)
-    @JoinColumn(name = "user_id" , referencedColumnName = "id") //유저 테이블의 id를 참조하는 키가 유저아이디라고 todoTable에 생성됨
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    // 기본 생성자
-    public Todo() {
-
+    // 기본 생성자 (JPA에서 사용)
+    protected Todo() {
     }
 
-    // 생성자
+    // 사용자 정의 생성자
     public Todo(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-//    private String createdAt; 이미 상속 받은 것이기에 중복해서 쓸 필요 없다
-//    private String updatedAt;
-
-    public void update(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-
+    // 사용자 설정 메서드
+    public void assignUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("사용자는 null일 수 없습니다.");
+        }
+        this.user = user;
     }
 
-
-
-
-
-
-
+    // 일정 정보 업데이트 메서드
+    public void update(String title, String contents) {
+        if (title != null && !title.isEmpty()) {
+            this.title = title;
+        }
+        if (contents != null && !contents.isEmpty()) {
+            this.contents = contents;
+        }
+    }
 }
