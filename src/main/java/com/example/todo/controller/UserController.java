@@ -40,17 +40,21 @@ public class UserController {
         return new ResponseEntity<>(usersResponseDto, HttpStatus.OK);
     }
 
-    // 유저 업데이트 (예: 유저명)
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}") // 유저 수정
     public ResponseEntity<Void> updateUser(
-            @PathVariable Long id,
-
-            @RequestBody UpdateUsersRequestDto UserRequestDto
+        @PathVariable Long id,
+        @Valid @RequestBody UpdateUsersRequestDto userRequestDto // @Valid 추가
     ) {
-        userService.updateUser(id, UserRequestDto.getUsername());
+
+        if (userRequestDto.getUsername() == null || userRequestDto.getUsername().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "유저명이 비어 있을 수 없습니다.");
+        }
+
+        userService.updateUser(id, userRequestDto.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     // 유저 삭제
     @DeleteMapping("/{id}")
