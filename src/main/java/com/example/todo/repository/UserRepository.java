@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByUsername(String username); //ts
 
-    User findIdByEmailAndPassword(String email, String password);
+    User findIdByEmail(String email);
     // SELETE * FROM User u WHERE u.email = email AND u.password = password;
 
     default User findUserByUsernameOrElseThrow(String username) {

@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.config.PasswordEncoder;
 import com.example.todo.dto.LoginRequestDto;
 import com.example.todo.dto.UserResponseDto;
 import com.example.todo.dto.SignUpResponseDto;
@@ -9,9 +10,8 @@ import com.example.todo.exception.NotFoundUserException;
 import com.example.todo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
 
 
 @Service
@@ -20,9 +20,12 @@ public class UserService {
 
     private final UserRepository userRepository; // 필드 중복 제거
 
+    private final PasswordEncoder passwordEncoder;
+
     // 회원 가입 메서드
     public SignUpResponseDto signUp(String username, String password, String email) {
-        User member = new User(username, password, email);
+          String encodedPassword = passwordEncoder.encode(password);
+        User member = new User(username, encodedPassword, email);
         User savedMember = userRepository.save(member);
         return new SignUpResponseDto(savedMember.getUsername(), savedMember.getEmail());
     }
@@ -75,7 +78,12 @@ public class UserService {
 
     // 로그인 작동 -> 입력받은 이메일과 비밀번호로 유저 식별자를 받아온다
     public Long login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findIdByEmailAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        User user = userRepository.findIdByEmail(loginRequestDto.getEmail());
+
+        boolean matches = passwordEncoder.matches(loginRequestDto.getPassword(),user.getPassword());
+        if (!matches) {
+            throw new IncorrectPasswordException("비밀번호가 일치하지 않습니다.");
+        }
 
         return user.getId();
     }
