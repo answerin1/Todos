@@ -46,11 +46,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = Exception.class) //튜터님이 적어주신 예외 처리 코드... 참고!!!
-    public ResponseEntity<ErrorResponse> handlerException(Exception e) {
-        log.error(e.getMessage(), e);
-        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
 }
